@@ -1,0 +1,27 @@
+Package: star
+Type: Package
+Title: Self-Thresholding Angular-Radial Models of Extremal Dependence
+Version: 0.2.0
+Authors@R: c(
+    person("Manuele", "Leonelli", email = "manuele.leonelli@ie.edu", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-2562-5192")),
+    person("Dani", "Gamerman", role = "aut"))
+Description: Fits the self-thresholding angular-radial (STAR) model of
+    Leonelli and Gamerman to bivariate data on standard exponential margins:
+    the radius given the angle follows a spliced distribution with an
+    angle-dependent Gamma body below an estimated power-mean threshold curve
+    and an exponential (generalized Pareto with shape zero) tail above it, the
+    angular density is a Bernstein polynomial, and the tail scale is the
+    structured family in which the coefficient of extremal association is an
+    explicit parameter. Inference is by adaptive Metropolis-within-Gibbs, with
+    a continuous Beta prior or a three-component prior on the dependence
+    parameter that delivers posterior probabilities of the extremal
+    dependence classes. Derived quantities include chi(q), the angular
+    dependence function and joint survival probabilities. A trivariate
+    implementation with the additive-pairwise gauge is provided in
+    inst/trivariate. Core likelihood routines are written in C++ through Rcpp.
+License: GPL (>= 3)
+Encoding: UTF-8
+Imports: Rcpp (>= 1.0.0), stats, graphics, grDevices
+LinkingTo: Rcpp
+NeedsCompilation: yes

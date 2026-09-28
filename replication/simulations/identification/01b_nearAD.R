@@ -1,0 +1,16 @@
+# 01b_nearAD.R -- local information analysis near the asymptotic dependence boundary (Section S4.1)
+source("00_utils.R")
+set.seed(105)
+N_INFO <- 1.2e5
+th0 <- theta_true(chibar = 0.95, p = 2)
+dat <- rstar(N_INFO, th0)
+q0 <- -log(1 - 0.8)
+ll <- make_ll(dat$r, dat$w, q0)
+H <- num_hessian(ll, pack_theta(th0, q0), h = 2e-3)
+Ihat <- -(H + t(H)) / 2 / N_INFO
+ev <- eigen(Ihat, symmetric = TRUE)
+cat("near_AD eigenvalues:\n"); print(signif(ev$values, 3))
+V <- solve(Ihat)
+cat("asymptotic sd at n = 2000:\n")
+print(signif(setNames(sqrt(diag(V)/2000), par_names), 2))
+saveRDS(list(I = Ihat, eig = ev), "info_near_AD.rds")
