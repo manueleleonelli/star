@@ -1,15 +1,15 @@
 ## make_tables_supp.R -- Supplement Tables S2 (tab:diag), S3 (tab:ident) and
-## S10 (tab:sens), the TikZ coordinates of Figure S1 (fig:ident), and the
+## S10 (tab:sens), and the
 ## numbers quoted in main Section 4.2 and supplement Sections S3.6, S4.1 and
 ## S4.7. Works from saved results only; no MCMC is rerun.
 ##
 ## Run from simulations/tables. Inputs:
 ##   ../main/results/s10_diagnostics.rds, ../main/results/s7_slab.rds
-##   ../identification/contraction.rds, pfocus.rds, ridge_anchor.rds,
+##   ../identification/contraction.rds, ridge_anchor.rds,
 ##     ridge_weak.rds, results05/undercoverage.rds
 ##   ../sensitivity/results/kappa.rds, prior.rds, basis.rds, alphaw.rds,
 ##     ridge300.rds
-## Outputs: tab_diag.tex, tab_ident.tex, tab_sens.tex, fig_ident_coords.tex
+## Outputs: tab_diag.tex, tab_ident.tex, tab_sens.tex
 ## (the contents of each table float, and the plot lines of the figure).
 ## Optional check against the paper: set STAR_PAPER_DIR to the folder holding
 ## supplement-ba.tex; every table row and figure line is then compared with it.
@@ -156,55 +156,6 @@ tab_sens <- c(
 cat("\n===== Table S10 (tab:sens) =====\n"); emit(tab_sens, "tab_sens.tex")
 
 ## =========================================================================
-## Figure S1 (fig:ident), TikZ coordinates (log10 n, log10 width).
-## Left: median 90% interval width over 30 replicates, input contraction.rds.
-## Right: median pointwise width of rho(.) (solid) and median(p_hi) minus
-## median(p_lo) (dashed), input pfocus.rds. The published coordinates were
-## entered from the console summaries of 02_contraction.R (widths printed at
-## three significant digits) and 04_pfocus.R (print(..., digits = 3), which
-## gives each column a common number of decimals), so the widths are rounded
-## as displayed there before taking log10.
-## =========================================================================
-coords <- function(x, y) paste(sprintf("(%s,%s)", num(x, 3), num(y, 3)), collapse = " ")
-curve <- function(style, x, y) sprintf(r"(\draw[%s] plot coordinates {%s};)", style, coords(x, y))
-label <- function(col, x, y, txt) sprintf(r"(\node[%s,anchor=west] at (%s,%s) {\tiny %s};)", col, num(x, 2), num(y, 3), txt)
-
-ns_l <- sort(unique(wmed$n))
-left <- list(p = c("blue", "$p$"), chibar = c("violet", r"($\bar{\chi}$)"),
-             rho0.5 = c("red!80!black", r"($\rho(1/2)$)"), rho0.15 = c("orange", r"($\rho(0.15)$)"),
-             exc_frac = c("black!60", r"($\text{exc.\ frac.}$)"))
-yl <- lapply(names(left), function(q) { a <- wmed[wmed$quantity == q, ]; log10(signif(a$width[order(a$n)], 3)) })
-fig_left <- c(mapply(function(q, y) curve(paste0("thick,", left[[q]][1]), log10(ns_l), y), names(left), yl),
-              mapply(function(q, y) label(left[[q]][1], 3.95, tail(y, 1), left[[q]][2]), names(left), yl))
-
-pf <- aggregate(cbind(p_lo, p_hi, rho_width_mean) ~ ptrue + n, readRDS(file.path(ID, "pfocus.rds")), median)
-pf$p_CI_width <- pf$p_hi - pf$p_lo
-shown3 <- function(x) as.numeric(format(x, digits = 3))     # as print(df, digits = 3) displays a column
-pf$rho_disp <- shown3(pf$rho_width_mean); pf$pw_disp <- shown3(pf$p_CI_width)
-ns_r <- sort(unique(pf$n)); right <- c(`1` = "orange", `2` = "red!80!black", `8` = "blue")
-fig_right <- unlist(lapply(names(right), function(pt) {
-  a <- pf[pf$ptrue == as.numeric(pt), ]; a <- a[order(a$n), ]
-  c(curve(paste0("thick,", right[pt]), log10(ns_r), log10(a$rho_disp)),
-    curve(paste0("thick,dashed,", right[pt]), log10(ns_r), log10(a$pw_disp)))
-}))
-fig_right <- c(fig_right, sapply(names(right), function(pt) {
-  a <- pf[pf$ptrue == as.numeric(pt) & pf$n == max(ns_r), ]
-  label(right[pt], 3.66, log10(a$pw_disp), sprintf("$p=%s$", pt)) }))
-fig_ident <- c("% (a) contraction of 90% intervals", unname(fig_left),
-               "% (b) curve (solid) against exponent (dashed)", unname(fig_right))
-cat("\n===== Figure S1 (fig:ident), coordinates =====\n"); emit(fig_ident, "fig_ident_coords.tex")
-
-## sensitivity to the display rounding: the same coordinates from unrounded
-## widths differ by at most about 0.001; log-log slopes of the solid curves
-raw_l <- unlist(lapply(names(left), function(q) { a <- wmed[wmed$quantity == q, ]; log10(a$width[order(a$n)]) }))
-pr_o <- pf[order(pf$ptrue, pf$n), ]
-cat(sprintf("max |unrounded - displayed| log10 width: left %.4f, right solid %.4f, right dashed %.4f\n",
-            max(abs(raw_l - unlist(yl))), max(abs(log10(pr_o$rho_width_mean) - log10(pr_o$rho_disp))),
-            max(abs(log10(pr_o$p_CI_width) - log10(pr_o$pw_disp)))))
-sl_r <- sapply(split(pr_o, pr_o$ptrue), function(a) diff(log10(a$rho_width_mean)) / diff(log10(a$n)))
-cat("log-log slopes of the solid curves (p = 1, 2, 8):", num(sl_r, 2), "\n")
-
-## =========================================================================
 ## Numbers quoted in the text: main Section 4.2, supplement Sections S3.6,
 ## S4.1 and S4.7. Inputs as above. 'paper' is the value as printed.
 ## =========================================================================
@@ -298,7 +249,4 @@ if (file.exists(paper)) {
   compare("Table S2", body_diag, rows_of(block("tab:diag", "table")))
   compare("Table S3", c(body_a, body_b, body_c), rows_of(block("tab:ident", "table")))
   compare("Table S10", c(body_sa, body_sb, body_sc), rows_of(block("tab:sens", "table")))
-  fl <- norm(block("fig:ident", "figure"))
-  fl <- fl[grepl("^\\\\draw\\[thick.*plot coordinates|^\\\\node\\[[^]]*anchor=west", fl)]
-  compare("Figure S1", fig_ident[!grepl("^%", fig_ident)], fl)
 } else cat("\n(paper source not found; set STAR_PAPER_DIR to compare with supplement-ba.tex)\n")

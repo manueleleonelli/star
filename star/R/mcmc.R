@@ -4,7 +4,7 @@
 #'
 #' @param E n x 2 matrix on standard exponential margins
 #' @param prior output of \code{star_prior()}
-#' @param K_W,K_lam,K_nu basis sizes (angular density; log body rate; log shape)
+#' @param K_W,K_lam,K_nu basis sizes (angular density; log body rate; log relaxation function)
 #' @param n_iter,burnin,thin chain settings; adaptation runs during burn-in
 #' @param beta_move proposal probabilities of (zero, slab, one) for the
 #'   between-component move under the three-component prior

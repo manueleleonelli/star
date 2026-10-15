@@ -1,7 +1,7 @@
 # 02_contraction.R -- Component B: posterior contraction rates
 # CI width and posterior sd of parameters and functionals versus n; the
 # log-log slope against n identifies the contraction rate (-1/2 = regular).
-# The settings below are those of the run reported in the supplement (Section S4.1, Table S3, Figure S1).
+# The settings below are those of the run reported in the supplement (Section S4.1, Table S3).
 
 source("00_utils.R")
 library(parallel)

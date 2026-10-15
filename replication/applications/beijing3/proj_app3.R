@@ -17,5 +17,5 @@ w2 <- cos(thg) / (cos(thg) + sin(thg)); id2 <- round(seq(1, nrow(D2), length.out
 biv <- apply(sapply(id2, function(s) star::sigma_star(w2, D2[s, "chibar"], D2[s, zc])), 1, median) / (cos(thg) + sin(thg))
 saveRDS(list(PR = PR, thg = thg, biv = biv, ETAf = ETAf), "results/fig_app3_data.rds")
 cat("eta medians on the fine grid (12, 13, 23, 123):", round(apply(ETAf, 2, median), 3), "\n")
-cat("eta medians of Table S15 (400 draws):", round(apply(S$ETA, 2, median), 3), "\n")
+cat("eta medians of Table 5 (400 draws):", round(apply(S$ETA, 2, median), 3), "\n")
 cat("eta of the median projected curve:", round(sapply(1:3, function(q) { md <- apply(PR[[q]], 1, median); max(pmin(md * cos(thg), md * sin(thg))) }), 3), "\n")

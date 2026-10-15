@@ -1,4 +1,5 @@
-MAIN SIMULATION STUDIES (Section 5 of the paper and Sections S3.6, S4.2 to S4.6 of the supplement)
+MAIN SIMULATION STUDIES (Section 5 of the paper and Sections S3.6, S4.2 to S4.6 of the supplement; s9 and s11 are
+additional checks not reported in the paper)
 
 Every fit uses the star defaults (v_p = 0.75, 30,000 iterations, 10,000 burn-in, thinning 5), 50 replicates per cell.
 
@@ -19,8 +20,8 @@ s5  Gaussian correlation sweep, P(AD | data)                      starred rows o
 s6  Hill-type estimator of eta                                    Hill column of Table S6
 s7  slab sensitivity at the boundary                              Table S10 (c)
 s8  ablation under misspecification                               Table S9, Table 3 (centre)
-s9  asymmetric structure                                          Section S4.2
+s9  asymmetric structure                                          additional check, not reported
 s10 convergence diagnostics                                       Table S2
-s11 Proposition 3 in the fitted object                            Section S4.2
+s11 Proposition 3 in the fitted object                            additional check, not reported
 
 Cost at full scale: about 30 to 40 core-hours, Study 2 the largest. Study 3 must precede Studies 6 and 8.

@@ -1,5 +1,5 @@
-## theory_check.R -- numerical check of Proposition 3: joint and marginal tail decay and the
-## copula tail dependence coefficient at the boundary chibar = 1 (formula in Section S2).
+## theory_check.R -- numerical check of Proposition 3: joint and marginal tail decay and, at the
+## boundary chibar = 1, the copula tail dependence coefficient (not reported in the paper).
 ## Integrals are computed on the scale exp(s) to avoid underflow. Needs star for rho_star.
 suppressMessages(library(star))
 check <- function(chibar, nu, alpha, u, p, fw, lamf) {

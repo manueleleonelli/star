@@ -12,4 +12,3 @@ if (!file.exists("00_utils.R"))
 source("01_information.R")   # ~3 min per configuration, no MCMC
 source("02_contraction.R")   # heaviest component
 source("03_ridge.R")
-source("04_pfocus.R")

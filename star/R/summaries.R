@@ -76,7 +76,7 @@ joint_surv <- function(fit, t1, t2, ndraw = 200, M = 201) {
 
 # Plots ----------------------------------------------------------------------
 
-#' Scaled sample with the posterior of the limit set boundary (silhouette check)
+#' Scaled sample with the posterior of the limit set boundary (check of fit of Section 4.5)
 #' @export
 plot_silhouette <- function(fit, ndraw = 100, wgrid = seq(0.002, 0.998, length.out = 199)) {
   n <- length(fit$r); ln <- log(n)

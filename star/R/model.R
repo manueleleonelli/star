@@ -13,7 +13,7 @@ rho_star <- function(w, u1, u2, p) rho_cpp(w, u1, u2, p)
 #' @export
 lambda_star <- function(w, b) exp(bern_eval_vec(w, b))
 
-#' Shape function nu(w) = exp(Bernstein(z))
+#' Relaxation function nu(w) = exp(Bernstein(z))
 #' @export
 nu_star <- function(w, z) exp(bern_eval_vec(w, z))
 
@@ -56,7 +56,7 @@ rstar <- function(n, theta) {
 # Priors ---------------------------------------------------------------------
 
 #' Prior specification
-#' @param route "beta" (continuous prior on chibar) or "threecomp" (spike and slab)
+#' @param route "beta" (continuous prior on chibar) or "threecomp" (atoms at 0 and 1 and a Beta slab)
 #' @param v_p sd of the N(log 2, v_p^2) prior on log p, supporting p in (0, Inf)
 #' @param p_min lower bound on the exponent p (0 = unrestricted; 1 restricts to convex thresholds)
 #' @export

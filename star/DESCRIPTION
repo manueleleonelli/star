@@ -12,7 +12,7 @@ Description: Fits the self-thresholding angular-radial (STAR) model of
     angle-dependent Gamma body below an estimated power-mean threshold curve
     and an exponential (generalized Pareto with shape zero) tail above it, the
     angular density is a Bernstein polynomial, and the tail scale is the
-    structured family in which the coefficient of extremal association is an
+    scale family in which the coefficient of extremal association is an
     explicit parameter. Inference is by adaptive Metropolis-within-Gibbs, with
     a continuous Beta prior or a three-component prior on the dependence
     parameter that delivers posterior probabilities of the extremal
@@ -21,6 +21,8 @@ Description: Fits the self-thresholding angular-radial (STAR) model of
     implementation with the additive-pairwise gauge is provided in
     inst/trivariate. Core likelihood routines are written in C++ through Rcpp.
 License: GPL (>= 3)
+URL: https://github.com/manueleleonelli/star
+BugReports: https://github.com/manueleleonelli/star/issues
 Encoding: UTF-8
 Imports: Rcpp (>= 1.0.0), stats, graphics, grDevices
 LinkingTo: Rcpp
